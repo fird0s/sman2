@@ -1,0 +1,14 @@
+#HTML
+*.html~
+
+#CSS
+*.css~
+
+#Python 
+*~.py~
+*.pyc
+
+
+#VIM
+*.swp
+

@@ -1,0 +1,156 @@
+* {padding: 0px; margin: 0px}
+
+@font-face {
+        font-family: 'Cyen';
+        font-style: normal;
+        src: url('Cyen.ttf'); /*if IE */
+}
+
+body {
+	background: white;
+}
+
+#header{
+	border: 1px solid #FFEFEF;
+	height: 80px;
+	margin: auto;
+	background: #FFEFEF;
+	
+}
+
+.logo-header{
+	width: 80px;
+	height: 80px;
+	border: 10px solid white;
+	border-radius: 5	px;
+}
+
+.database{
+	margin-top: 51px;
+	color: #FF5919;
+	font-weight:bold;
+	 font-family: 'Cyen';
+	text-decoration: underline;
+	
+	padding: 7px;
+}
+
+#header-dalam {
+	width: 840px;
+	margin: auto;
+
+	
+}
+
+#colom{
+	float : left;
+}
+
+
+#masuk {
+	margin-top: 37px;
+	font-family: 'Cyen';
+	background: #FF5919;
+	margin-left: 150px;
+	padding: 10px;
+	
+	
+}
+
+#masuk li  {
+	display: inline;
+			
+
+}
+
+#masuk a{
+		text-decoration: none;
+		padding: 10px;	
+		color: white;
+		font-weight: bold
+}
+
+#masuk a:hover{
+	color: black;
+	background: white;
+	padding-bottom: 30px;
+	font-weight: bold
+	}
+
+
+#content {
+	clear: both;
+	width: 1000px;
+	border: 1px solid 	#FF5919;
+	margin: auto;
+	margin-top: 30px;
+	padding: 5px;	
+	background: white;
+}
+
+#footer{
+	
+	padding: 5px;
+	margin: auto;
+ 	background:#FFEFEF;
+	margin-top: 50px;
+	text-align: center;
+	}
+	
+#footer li{
+	display: inline;
+	font-family: 'Cyen';
+}	
+
+#footer li a{
+	padding: 10px;
+	color: #FF5919;
+	font-weight: bold;
+}
+
+#footer li a:hover{
+	background: #FF5919;
+	text-decoration: none;
+	color: white;
+}
+
+#login {
+	padding: 80px;
+	left: 32%;
+	top: 10%;
+	z-index: 3;
+	background:   #FFF;
+	position: absolute;
+	display: none;
+	border: 1px solid #87a8a8;
+	
+}
+
+#singup{
+	padding-top: 10px;
+	padding-left: 130px;
+	padding-right: 100px;
+	left: 15%;
+	top: 10%;
+	z-index: 2;
+	background:  white;
+	position: absolute;
+	display: none;
+	border: 1px solid #87a8a8;
+
+}
+
+#contact {
+	padding-top: 10px;
+	padding-left: 70px;
+	padding-right: 40px;
+	padding-bottom: 10px;
+	left: 30%;
+	top: 7%;
+	z-index: 2;
+	background:   #FFF;
+	position: absolute;
+	display: none;
+	border: 1px solid #87a8a8;
+}
+

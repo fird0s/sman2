@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html lang="id">
+	<head>
+		<title>ALUMNI SMAN2 BANDA ACEH</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">	
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.4.4.js') }}"></script>
+		<script>
+	$(document).ready(function(){
+			$(".overlogin").click(function(){
+				$("#singup").css("display","none");	
+			    $("#login").fadeIn(300, 'linear', function(){
+					$("#login").css("display","block");
+			   });	
+			});
+			
+			$(".login-keluar").click(function(){
+				$("#login").fadeOut(300, 'linear', function(){
+					$("#login").css("display","none");	
+				});	
+			});
+			
+		});
+		
+		$(document).ready(function(){
+			$(".oversingup").click(function(){
+			    $("#singup").fadeIn(300, 'linear', function(){
+			    	$("#login").css("display","none");
+				    $('#singup').css("display","block");
+				});	
+			});
+			
+			$(".singup-keluar").click(function(){
+			 	$("#singup").fadeOut(300, 'linear', function(){
+					$("#singup").css("display","none");	
+			 	});
+			});
+			
+			$(".overlay-contact").click(function(){
+				$("#contact").css("display","block");
+			});
+			
+		
+			$(".contact-keluar").click(function(){
+				$("#contact").css("display","none");
+			});
+			
+			
+		});
+		</script>
+		
+	</head>
+	
+<body>
+	<!-- HEADER -->
+	<div id="header">
+		<div id="header-dalam">
+	      <div id="colom">
+			  <img class="logo-header" src="{{url_for('static', filename='img/logo-sma-2.jpg')}}"></img>
+		  </div>	
+		  <div id="colom">
+			<p class="database">DATABASE ALUMNI SMAN2 BANDA ACEH</p>
+		  </div>
+		   <div id="colom">
+				<script type="text/javascript">
+				var hari_ini= new Date()
+				var tahun = hari_ini.getYear()
+				
+</script>
+
+				
+				<div id="masuk">
+					<li><a href="#"  class="overlogin" >LOGIN</a></li> /
+					<li><a href="#" class="oversingup"> REGISTER</a></li>
+				</div>	
+		  </div>	
+		</div>
+	</div>
+	<!-- END HEADER -->
+	
+	
+	<!--CONTENT-->
+	{% block content %}
+	<div id="content">
+		<div class="bs-docs-example">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>NAMA </th>
+                  <th>ANGKATAN</th>
+                  <th>EMAIL</th>
+                  <th>HANDPHONE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><a href="#">Muhammad FIrdaus</a></td>
+                  <td>2013</td>
+                  <td>firdauskoder@gmail.com</td>
+                  <td>085270546820</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>Muhammad FIrdaus</td>
+                  <td>2013</td>
+                  
+                  <td>firdauskoder@gmail.com</td>
+                  <td>asda</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          </div>
+	</div>
+	{% endblock %}
+	<!-- END CONTENT-->
+	
+	<!--FOR LOGIN -->
+	<div id="login">
+		
+		<h4 class="login-keluar" style="padding-left: 300px;; color: #FF5919; font-size: 40px; margin-top:    
+		    -60px;">&times;</h4>
+		<h3>LOGIN ...</h3>
+			<form class="form-inline">
+  				<input type="text" class="span4" placeholder="Email"><br><br>
+  				<input type="password" class="input-small span4" placeholder="Password"><br><br>
+       		    <button type="submit" class="btn btn-large">Sign in</button>
+				<a class="lupapassword" href="#">LUPA PASSWORD ?</a>
+			</form>
+	</div>
+	<!--END LOGIN -->
+	
+	<!--FOR REGISTER -->
+	<div id="singup">
+	<h4 class="singup-keluar" style="margin-left: 650px;; color: #FF5919; font-size: 40px; ">&times;</h4>
+		<h3>REGISTER ...</h3>
+		<form class="form-inline">
+  			<input type="text" class="span4" placeholder="Fullname">
+  			<input type="text" class="span4" placeholder="Email"><br><br>
+  			<input type="password" class="span4" placeholder="Password">
+  			<input type="password" class="input-small span4" placeholder="Re-password"><br><br>
+  		        Pilih Angkatan : <select class="span3">
+ 				<option>1</option>
+  				<option>2</option>
+ 			    <option>3</option>
+  				<option>4</option>
+  				<option>5</option>
+			</select>
+  			<input type="text" class="span3" placeholder="No-Handphone"><br><br>
+       	    <button type="submit" class="btn btn-large">Register</button>
+			<a class="overlogin" href="#">Sudah punya akun !</a>
+		</form>
+	</div>
+	<!--END REGISTER -->
+	
+	<!--CONTACT -->
+	<div id="contact">
+		<h4 class="contact-keluar" style="margin-left: 400px;; color: #FF5919; font-size: 40px; ">&times;</h4>
+		<h5>CONTACT/FEEDBACK ...</h5>
+		<form class="form-inline">
+  				<input type="text" class="span4" placeholder="Nama"><br><br>
+  				<input type="text" class="input-small span4" placeholder="Email"><br><br>
+  				<input type="text" class="span4" placeholder="No-Handphone"><br><br>
+  			     	Message : <br><textarea rows="7" class="span4"></textarea><br><br>
+       		    <button type="submit" class="btn btn-large span3">Send</button>
+		</form>
+	
+	</div>
+	<!-- END CONTACT -->
+
+	
+	<!-- FOOTER -->
+	<div id="footer">
+		<li><a href="https://www.facebook.com/firdaus.white?ref=tn_tnmn" target="blank">DEVELOPED-BY</a></li>
+		<li><a href="#" class="overlay-contact">CONTACT/FEEDBACK</a></li>
+		<li><a href="#">DONATE-ME</a></li>
+	</div>
+	<!--END FOOTER -->
+</body>
+</html>
