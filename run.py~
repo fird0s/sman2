@@ -77,7 +77,7 @@ def profile(show_profil):
 @sman2.route('/user/',  methods=['GET', 'POST'])
 def user():
 	if "user" in session:
-		return "you logged as %s" % session['user']
+		return "you logged as %s" % session['user.password']
 	
 	if request.method == "POST":
 		if request.form["user-login"] and request.form["user-password"]:

@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block content %}
+
+  <div id="profile">
+	{% if profil_data %}
+	<ul>
+		<li> <b>Nama</b>    {{ profil_data.fullname }} </li>
+		<li> <b>E-mail</b>   {{ profil_data.email }} </li>
+		<li> <b>No HP</b>   {{ profil_data.handphone }} </li>
+		<li> <b>Angkatan</b>   {{ profil_data.angkatan }} </li>
+		<li> <b>Pekerjaan</b>   {{ profil_data.work }} </li>	
+	</ul>	
+	{% endif %}
+	
+  </div>		
+
+{% endblock %}

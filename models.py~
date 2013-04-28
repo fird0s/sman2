@@ -50,6 +50,8 @@ class Contact(Base):
 		self.handphone = handphone
 		self.message = message
 		
+		
+Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session_db = Session()	
 		

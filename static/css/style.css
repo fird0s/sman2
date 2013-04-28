@@ -35,6 +35,8 @@ body {
 	padding: 7px;
 }
 
+.database a{color:#FF5919;}
+
 #header-dalam {
 	width: 840px;
 	margin: auto;
@@ -51,7 +53,7 @@ body {
 	margin-top: 37px;
 	font-family: 'Cyen';
 	background: #FF5919;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding: 10px;
 	
 	
@@ -59,15 +61,19 @@ body {
 
 #masuk li  {
 	display: inline;
-			
-
+	
+	
 }
 
 #masuk a{
 		text-decoration: none;
 		padding: 10px;	
-		color: white;
-		font-weight: bold
+		color: #FFF;
+		font-weight: bold;
+		margin-left: 10px;
+		border-bottom: 1px solid white;
+		
+		
 }
 
 #masuk a:hover{
@@ -153,4 +159,18 @@ body {
 	display: none;
 	border: 1px solid #87a8a8;
 }
+
+#profile {width: 500px; margin: 0 auto; margin-top: 30px; padding: 5px; background: white ; border: 1px solid orange;
+		padding: 20px; }
+
+#profile ul li {font-size: 20px;
+				padding: 5px;
+				border-bottom: 1px solid gray;
+				display: block;
+				}
+				
+#profile li b{color: gray; font-size: 24px; margin-right: 10px;}				
+
+#profile li b:hover{background: #A99494;}
+
 
