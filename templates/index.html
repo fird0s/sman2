@@ -70,11 +70,19 @@
 </script>
 
 				
+				
+			{% block menu %}
 				<div id="masuk">
+				{% if auth %}
+					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
+					<li><a href="#" class="setting">SETTING ACCOUNT</a></li> 
+				{% else %}
 					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
 					<li><a href="#" class="overlogin">LOGIN</a></li> 
 					<li><a href="#" class="oversingup"> REGISTER</a></li>
-				</div>	
+				{% endif %}
+				</div>
+			{% endblock %}		
 		  </div>	
 		</div>
 	</div>
@@ -120,8 +128,8 @@
 		    -60px;">&times;</h4>
 		<h3>LOGIN ...</h3>
 			<form class="form-inline" action="/user/" method="POST">
-  				<input type="text" name="user-login" class="span4" placeholder="Username"><br><br>
-  				<input type="password" name="user-password" class="input-small span4" placeholder="Password"><br><br>
+  				<input type="text" name="user-login" class="span4" placeholder="Username" required><br><br>
+  				<input type="password" name="user-password" class="input-small span4" placeholder="Password" required><br><br>
        		    <button type="submit" class="btn btn-large">Sign in</button>
 				<a class="lupapassword" href="#">LUPA PASSWORD ?</a>
 			</form>
@@ -134,12 +142,12 @@
 		<h3>REGISTER ...</h3>
 		<form class="form-inline" method="POST" action="{{ url_for('register') }}">
 			<input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-			<input type="text" name="rg-name" class="span3" placeholder="Username">
-  			<input type="text" name="rg-fullname" class="span4" placeholder="Fullname"><br><br>
-  			<input type="text" name="rg-mail" class="span4" placeholder="Email">
-  			<input type="password" name="rg-password" class="span3" placeholder="Password"><br><br>
+			<input type="text" name="rg-name" class="span3" placeholder="Username" required>
+  			<input type="text" name="rg-fullname" class="span4" placeholder="Fullname" required><br><br>
+  			<input type="email" name="rg-mail" class="span4" placeholder="Email" required>
+  			<input type="password" name="rg-password" class="span3" placeholder="Password" required><br><br>
   			<input type="text" name="rg-angkatan" class="span3" placeholder="Angkatan">
-  			<input type="text" name="rg-hp" class="span4" placeholder="No-hp"><br><br>
+  			<input type="text" name="rg-hp" class="span4" placeholder="No-hp" required><br><br>
        	    <button type="submit" class="btn btn-large">Register</button>
 			<a class="overlogin" href="#">Sudah punya akun !</a>
 		</form>

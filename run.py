@@ -6,8 +6,12 @@ from sqlalchemy.orm.exc import NoResultFound
 
 @sman2.route('/',  methods=['GET', 'POST'])
 def index():
+	if "user" in session:
+		auth=True
+	else:
+		auth=False		
 	all_user = session_db.query(Users).all()
-	return render_template("index.html", all_user=all_user)
+	return render_template("index.html", all_user=all_user, auth=auth)
 
 
 @sman2.route('/contact/',  methods=['GET', 'POST'])
@@ -67,18 +71,19 @@ sman2.jinja_env.globals['csrf_token'] = generate_csrf_token
 	
 @sman2.route('/<show_profil>')
 def profile(show_profil):
+	if "user" in session:
+		auth=True
+	else:
+		auth=None
 	try:
 		profil_data = session_db.query(Users).filter_by(username = show_profil).one()
 	except sqlalchemy.orm.exc.NoResultFound:
 		return redirect(url_for('index'))
-	return render_template("details.html", profil_data=profil_data)
+	return render_template("details.html", profil_data=profil_data, auth=auth)
 
 
 @sman2.route('/user/',  methods=['GET', 'POST'])
 def user():
-	if "user" in session:
-		return "you logged as %s" % session['user']
-	
 	if request.method == "POST":
 		if request.form["user-login"] and request.form["user-password"]:
 			try:
@@ -86,10 +91,13 @@ def user():
 				if check.password == request.form["user-password"]:
 					session['user'] = request.form['user-login']
 					return "hello"
+					session_db.close()	
 				else: 
 					return "your password is wrong"	
 			except sqlalchemy.orm.exc.NoResultFound:	
 				return "Your Username is wrong"
+	if "user" in session:
+		return "you logged as %s" % session['user']			
 	return render_template("user.html")
 
 @sman2.errorhandler(404)
