@@ -5,10 +5,11 @@
 *.css~
 
 #Python 
-*~.py~
+*.py~
 *.pyc
 
 
 #VIM
 *.swp
+*.swo
 
