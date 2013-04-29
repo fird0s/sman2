@@ -26,12 +26,12 @@ body {
 }
 
 .database{
-	margin-top: 51px;
+	margin-top: 30px;
 	color: #FF5919;
 	font-weight:bold;
 	 font-family: 'Cyen';
 	text-decoration: underline;
-	
+	width: 200px;
 	padding: 7px;
 }
 
@@ -48,40 +48,42 @@ body {
 	float : left;
 }
 
-
 #masuk {
-	margin-top: 37px;
+	margin-top: 30px;
 	font-family: 'Cyen';
 	background: #FF5919;
-	margin-left: 30px;
-	padding: 10px;
-	
-	
+	padding: 10px 5px 2px 0px;
 }
 
-#masuk li  {
+#masuk  ul li  {
 	display: inline;
 	
-	
-}
-
-#masuk a{
-		text-decoration: none;
-		padding: 10px;	
-		color: #FFF;
-		font-weight: bold;
-		margin-left: 10px;
-		border-bottom: 1px solid white;
-		
-		
-}
-
-#masuk a:hover{
-	color: black;
-	background: white;
-	padding-bottom: 30px;
-	font-weight: bold
 	}
+
+#masuk ul li:hover ul { 
+	display: block; 
+	position: absolute; 	}
+
+#masuk ul li ul {display: none; }
+#masuk ul li ul li a{padding-top: 10px;background: #FFEFEF; display: block;  width: 100px; margin-left: 45px;  text-align: center; border-bottom: 2px solid orange; color: black;}
+#masuk ul li a{
+		text-decoration: none;
+		padding: 5px;	
+		color: #000;
+		margin-left: 20px;		
+}
+
+#masuk ul li a:hover{
+	background: #FF5919;
+	padding-bottom: 8px;
+	color: white;
+	
+	}
+
+#masuk ul li:hover ul li a:hover {
+
+	color: black;
+}
 
 
 #content {

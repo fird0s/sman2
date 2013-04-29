@@ -74,12 +74,21 @@
 			{% block menu %}
 				<div id="masuk">
 				{% if auth %}
+				<ul>	
 					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
-					<li><a href="#" class="setting">SETTING ACCOUNT</a></li> 
+					<li><a href="#" class="setting">SETTING</a>
+						<ul>
+							<li><a href="#">SETTINGS</a></li>
+							<li><a href="{{ url_for('logout') }}">LOG OUT</a></li>
+						</ul>	
+					</li> 
+				</ul>	
 				{% else %}
+				<ul>
 					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
 					<li><a href="#" class="overlogin">LOGIN</a></li> 
 					<li><a href="#" class="oversingup"> REGISTER</a></li>
+				</ul>	
 				{% endif %}
 				</div>
 			{% endblock %}		
@@ -146,7 +155,7 @@
   			<input type="text" name="rg-fullname" class="span4" placeholder="Fullname" required><br><br>
   			<input type="email" name="rg-mail" class="span4" placeholder="Email" required>
   			<input type="password" name="rg-password" class="span3" placeholder="Password" required><br><br>
-  			<input type="text" name="rg-angkatan" class="span3" placeholder="Angkatan">
+  			<input type="text" name="rg-angkatan" class="span3" placeholder="Angkatan" required>
   			<input type="text" name="rg-hp" class="span4" placeholder="No-hp" required><br><br>
        	    <button type="submit" class="btn btn-large">Register</button>
 			<a class="overlogin" href="#">Sudah punya akun !</a>
@@ -160,10 +169,10 @@
 		<h5>CONTACT/FEEDBACK ...</h5>
 		<form class="form-inline"  action="/contact/" method="POST">
   				
-  				<input type="text" name="contact-name" class="span4" placeholder="Your name"><br><br>
-  				<input type="text" name="contact-email" class="input-small span4" placeholder="Email"><br><br>
-  				<input type="text" name="contact-hp" class="span4" placeholder="No-Handphone"><br><br>
-				Message : <br><textarea rows="7" name="contact-message" class="span4"></textarea><br><br>
+  				<input type="text" name="contact-name" class="span4" placeholder="Your name" required><br><br>
+  				<input type="text" name="contact-email" class="input-small span4" placeholder="Email" required><br><br>
+  				<input type="text" name="contact-hp" class="span4" placeholder="No-Handphone" required><br><br>
+				Message : <br><textarea rows="7" name="contact-message" class="span4" required></textarea><br><br>
   			     	
 					<button type="submit" class="btn btn-large span3">Send</button>
 				</form>		
@@ -175,7 +184,7 @@
 	
 	<!-- FOOTER -->
 	<div id="footer">
-		<li><a href="https://www.facebook.com/firdaus.white?ref=tn_tnmn" target="blank">DEVELOPED-BY</a></li>
+		<li><a href="https://firdaus.jones.dk" target="blank">DEVELOPED-BY</a></li>
 		<li><a class="overlay-contact">CONTACT/FEEDBACK</a></li>
 		<li><a href="#">DONATE</a></li>
 	</div>

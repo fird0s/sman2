@@ -90,7 +90,8 @@ def user():
 				check = session_db.query(Users).filter_by(username = request.form["user-login"]).one()
 				if check.password == request.form["user-password"]:
 					session['user'] = request.form['user-login']
-					return "hello"
+					
+					return redirect(url_for('index'))
 					session_db.close()	
 				else: 
 					return "your password is wrong"	
@@ -98,7 +99,13 @@ def user():
 				return "Your Username is wrong"
 	if "user" in session:
 		return "you logged as %s" % session['user']			
-	return render_template("user.html")
+	return render_template("user.html", check=check)
+
+@sman2.route('/logout/', methods=["POST", "GET"])
+def logout():
+	session.pop("user", None)
+	return redirect(url_for('index'))
+
 
 @sman2.errorhandler(404)
 def not_found(error):
@@ -109,7 +116,7 @@ def test():
 	if request.method == "POST":
 		if request.form["test-text"]:
 			return "hello"
-	return render_template("test.html")
+	return request.query_string
 
 if __name__ == "__main__":
 	sman2.secret_key = 'saya_orang_ganteng_Wx0ksck~\[p99923@#@!#!@#423raakleas'

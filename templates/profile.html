@@ -1,4 +1,26 @@
 {% extends "index.html" %}
+	
+			{% block menu %}
+				<div id="masuk">
+				{% if auth %}
+				<ul>	
+					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
+					<li><a href="#" class="setting">SETTING</a>
+						<ul>
+							<li><a href="#">SETTINGS</a></li>
+							<li><a href="{{ url_for('logout') }}">LOG OUT</a></li>
+						</ul>	
+					</li> 
+				</ul>	
+				{% else %}
+				<ul>
+					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
+					<li><a href="#" class="overlogin">LOGIN</a></li> 
+					<li><a href="#" class="oversingup"> REGISTER</a></li>
+				</ul>	
+				{% endif %}
+				</div>
+			{% endblock %}		
 {% block content %}
 <div id="profile">
 	<ul>
