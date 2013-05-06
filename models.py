@@ -18,11 +18,12 @@ class Users(Base):
 	angkatan = Column(Integer)
 	handphone = Column(String(20))
 	work = Column(String(20))
+	ip = Column(String(100))
 	
 	def __repr__(self):
 		return "('%s', '%s', '%s')" % (self.username, self.fullname, self.angkatan)
 	
-	def __init__(self, username, fullname, password, email, angkatan, handphone, work):
+	def __init__(self, username, fullname, password, email, angkatan, handphone, work, ip):
 		self.username = username
 		self.fullname = fullname
 		self.password = password
@@ -30,6 +31,7 @@ class Users(Base):
 		self.angkatan = angkatan
 		self.handphone = handphone
 		self.work = work
+		self.ip = ip
 	
 	def dto(self):
 		return dict(username = self.username, fullname =  self.fullname , password = self.password,email = self.email, \
@@ -49,6 +51,13 @@ class Contact(Base):
 		self.email = email
 		self.handphone = handphone
 		self.message = message
+		
+class Log(Base):
+	__tablename__ = "log"
+	
+	id = Column(Integer, primary_key=True)
+	request = Column(String(400))		
+	ip = Column(String(100))		
 		
 Session = sessionmaker(bind=engine)
 session_db = Session()	

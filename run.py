@@ -6,12 +6,16 @@ from sqlalchemy.orm.exc import NoResultFound
 
 @sman2.route('/',  methods=['GET', 'POST'])
 def index():
+	get_user = session.get("user", None)
+	abc = "fird0s"
 	if "user" in session:
 		auth=True
+		
 	else:
 		auth=False		
 	all_user = session_db.query(Users).all()
-	return render_template("index.html", all_user=all_user, auth=auth)
+	session_db.close()
+	return render_template("index.html", all_user=all_user, auth=auth, get_user=get_user, abc=abc)
 
 
 @sman2.route('/contact/',  methods=['GET', 'POST'])
@@ -71,6 +75,7 @@ sman2.jinja_env.globals['csrf_token'] = generate_csrf_token
 	
 @sman2.route('/<show_profil>')
 def profile(show_profil):
+	get_user = session.get("user", None)
 	if "user" in session:
 		auth=True
 	else:
@@ -78,8 +83,12 @@ def profile(show_profil):
 	try:
 		profil_data = session_db.query(Users).filter_by(username = show_profil).one()
 	except sqlalchemy.orm.exc.NoResultFound:
+		log = Log(request=request.url, ip=request.remote_addr)
+		session_db.add(log)
+		session_db.commit()
+		session_db.close()
 		return redirect(url_for('index'))
-	return render_template("details.html", profil_data=profil_data, auth=auth)
+	return render_template("details.html", profil_data=profil_data, auth=auth, get_user=get_user)
 
 
 @sman2.route('/user/',  methods=['GET', 'POST'])
@@ -101,6 +110,28 @@ def user():
 		return "you logged as %s" % session['user']			
 	return render_template("user.html", check=check)
 
+@sman2.route("/edit/", methods=['GET', 'POST'])
+def edit_user():
+	if "user" in session:
+		auth=True
+	else:
+		auth=None
+		return redirect(url_for("index"))
+	get_user = session.get("user", None)	
+	profile = session_db.query(Users).filter_by(username = get_user).one()
+	if request.method == "POST":
+		try:	
+			profile.fullname = request.form["edit-fullname"]
+			profile.email = request.form["edit-email"]
+			profile.handphone = request.form["edit-handphone"]
+			profile.angkatan = request.form["edit-angkatan"]
+			profile.work = request.form["edit-pekerjaan"]
+			session_db.add(profile)
+			session_db.commit()
+		except sqlalchemy.exc.IntegrityError:
+			return "please <b>%s</b> alredy used by other people !"  % (request.form["edit-email"])
+	return render_template("edit_user.html", auth=auth, get_user=get_user, profile=profile)
+
 @sman2.route('/logout/', methods=["POST", "GET"])
 def logout():
 	session.pop("user", None)
@@ -109,6 +140,10 @@ def logout():
 
 @sman2.errorhandler(404)
 def not_found(error):
+	log = Log(request=request.url, ip=request.remote_addr)
+	session_db.add(log)
+	session_db.commit()
+	session_db.close()
 	return redirect(url_for('index'))
 
 @sman2.route("/test", methods=["GET", "POST"])
@@ -119,7 +154,8 @@ def test():
 	return request.query_string
 
 if __name__ == "__main__":
-	sman2.secret_key = 'saya_orang_ganteng_Wx0ksck~\[p99923@#@!#!@#423raakleas'
+	
+	sman2.secret_key = '_Wx0ksck~\[p99923@#@!#!@#423raakleas'
 	sman2.debug = True
-	sman2.run()
+	sman2.run(host="127.0.0.1")
 

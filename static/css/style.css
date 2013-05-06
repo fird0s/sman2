@@ -65,7 +65,7 @@ body {
 	position: absolute; 	}
 
 #masuk ul li ul {display: none; }
-#masuk ul li ul li a{padding-top: 10px;background: #FFEFEF; display: block;  width: 100px; margin-left: 45px;  text-align: center; border-bottom: 2px solid orange; color: black;}
+#masuk ul li ul li a{background: white; display: block; margin-left: 60px; margin-top: padding: 5px; text-align: center; border-bottom: 2px solid orange; color: black; border-radius: 10px; }
 #masuk ul li a{
 		text-decoration: none;
 		padding: 5px;	
@@ -81,7 +81,7 @@ body {
 	}
 
 #masuk ul li:hover ul li a:hover {
-
+	
 	color: black;
 }
 
@@ -162,8 +162,8 @@ body {
 	border: 1px solid #87a8a8;
 }
 
-#profile {width: 500px; margin: 0 auto; margin-top: 30px; padding: 5px; background: white ; border: 1px solid orange;
-		padding: 20px; }
+#profile {width: 500px; margin: 0 auto; margin-top: 30px; padding: 5px; background: white ; border: 5px solid #FF5919;
+		padding: 20px; border-radius: 5px;} 
 
 #profile ul li {font-size: 20px;
 				padding: 5px;
@@ -171,8 +171,7 @@ body {
 				display: block;
 				}
 				
-#profile li b{color: gray; font-size: 24px; margin-right: 10px;}				
+#profile li b{font-size: 20px; margin-right: 10px; text-decoration: underline; font-style: italic;}				
 
-#profile li b:hover{background: #A99494;}
 
 

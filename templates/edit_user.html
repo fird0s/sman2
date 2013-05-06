@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block content %}
+<div id="profile">
+	<form method="POST" action="{{ url_for('edit_user') }}">
+		<div class="input-prepend">
+		 	<span class="add-on">@</span>
+  			<input class="span2" id="prependedInput" type="text" value="{{ get_user }}" disabled><br><br>
+  			<input type="text" name="edit-fullname" class="span5" placeholder="Fullname" value="{{ profile.fullname }}" required><br><br>
+  			<input type="text" name="edit-email" class="span5" placeholder="Email" value="{{ profile.email }}" 	required><br><br>
+  			<input type="text" name="edit-handphone" class="span5" placeholder="Phone number" value="{{ profile.handphone }}" required><br><br>
+  			<input type="text" name="edit-angkatan" class="span5" placeholder="Angkatan" value="{{ profile.angkatan }}" required><br><br>
+  			<input type="text" name="edit-pekerjaan" class="span5" placeholder="Pekerjaan" value="{{ profile.work }}" required><br><br>
+  			<button type="submit" class="btn ">Change</button>
+  		</div>	
+	</form>
+</div>
+{% endblock %}
