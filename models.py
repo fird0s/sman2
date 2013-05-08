@@ -62,5 +62,6 @@ class Log(Base):
 Session = sessionmaker(bind=engine)
 session_db = Session()	
 		
-	
+#Base.metadata.create_all(engine) this for create your database and 
+#please setting databasename 'sman2_alumni.db' and user = 'sman2' and pass = 'sman2'
 

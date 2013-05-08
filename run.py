@@ -10,10 +10,9 @@ def index():
 	abc = "fird0s"
 	if "user" in session:
 		auth=True
-		
 	else:
 		auth=False		
-	all_user = session_db.query(Users).all()
+	all_user = session_db.query(Users).all()[0:50]
 	session_db.close()
 	return render_template("index.html", all_user=all_user, auth=auth, get_user=get_user, abc=abc)
 
@@ -50,7 +49,7 @@ def register():
 		   request.form["rg-password"]:
 			try:
 				user = Users(request.form["rg-name"], request.form["rg-fullname"], request.form["rg-password"], \
-			    	         request.form["rg-mail"], request.form["rg-angkatan"], request.form["rg-hp"], "")
+			    	         request.form["rg-mail"], request.form["rg-angkatan"], request.form["rg-hp"], "", request.remote_addr)
 				session_db.add(user)
 				session_db.commit()
 				session_db.close()
@@ -61,6 +60,7 @@ def register():
 				
 			except sqlalchemy.exc.InvalidRequestError:
 				session_db.rollback()
+				session_db.close()
 		else:
 			return "All input form is required"	             
 	
@@ -132,8 +132,27 @@ def edit_user():
 			return "please <b>%s</b> alredy used by other people !"  % (request.form["edit-email"])
 	return render_template("edit_user.html", auth=auth, get_user=get_user, profile=profile)
 
+@sman2.route('/search/<angkatan>/')
+def search(angkatan):
+	lulusan = angkatan
+	get_user = session.get("user", None)
+	if "user" in session:
+		auth = True
+	else:
+		auth = None
+	data = session_db.query(Users).filter_by(angkatan = angkatan).all()
+	return render_template("search.html", auth=auth, get_user=get_user, data=data, lulusan=lulusan)
+
 @sman2.route('/logout/', methods=["POST", "GET"])
 def logout():
+	if not "user" in session:
+		return redirect(url_for("index"))
+	get_user = session.get("user", None)
+	profil_data = session_db.query(Users).filter_by(username = get_user).one()
+	profil_data.ip = request.remote_addr
+	session_db.add(profil_data)
+	session_db.commit()
+	session_db.close()
 	session.pop("user", None)
 	return redirect(url_for('index'))
 

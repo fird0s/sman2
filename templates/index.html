@@ -6,6 +6,12 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">	
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.4.4.js') }}"></script>
+		<script type="text/javascript">
+			var now = new Date(); /*Important Line, that you all missing... */
+			var checkyear = now.getUTCFullYear() + 1;
+			var monthly =now.getUTCMonth();
+			var daily =now.getUTCDate();
+		</script>
 		<script>
 	$(document).ready(function(){
 			$(".overlogin").click(function(){
@@ -53,6 +59,7 @@
 	</head>
 	
 <body>
+	<!--<marquee><h4>STILL MAINTANANCE YOUR DATA WILL BE LOSE !</h4></marquee>-->
 	<!-- HEADER -->
 	<div id="header">
 		<div id="header-dalam">
@@ -98,6 +105,7 @@
 	<!--CONTENT-->
 	{% block content %}
 	<div id="content">
+<!--	<p><b>Search by</b></p>-->
 		<div class="bs-docs-example">
             <table class="table table-hover table-striped">
               <thead>
@@ -152,7 +160,16 @@
   			<input type="text" name="rg-fullname" class="span4" placeholder="Fullname" required><br><br>
   			<input type="email" name="rg-mail" class="span4" placeholder="Email" required>
   			<input type="password" name="rg-password" class="span3" placeholder="Password" required><br><br>
-  			<input type="text" name="rg-angkatan" class="span3" placeholder="Angkatan" required>
+  			<select name="rg-angkatan">
+				<script>
+					var now = new Date(); /*Important Line, that you all missing... */
+					var checkyear = now.getUTCFullYear() + 1;
+						for (x=1945; x<checkyear; x++)
+							{	
+								document.write("<option value="+x+">"+x+"</option>");
+							}	
+				</script>
+			</select>
   			<input type="text" name="rg-hp" class="span4" placeholder="No-hp" required><br><br>
        	    <button type="submit" class="btn btn-large">Register</button>
 			<a class="overlogin" href="#">Sudah punya akun !</a>
