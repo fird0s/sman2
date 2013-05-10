@@ -12,7 +12,7 @@
   			<label><b>Phone :</b></label>
   			<input type="text" name="edit-handphone" class="span5" placeholder="Phone number" value="{{ profile.handphone }}" required><br><br>
   			<label><b>Angkatan : </b></label>
-  			<select name="edit-angkatan">
+  			<select name="edit-angkatan" class="span5" >
 				<script>
 					var now = new Date(); /*Important Line, that you all missing... */
 					var checkyear = now.getUTCFullYear() + 1;
@@ -24,7 +24,7 @@
 			</select><br><br>
 			<label><b>Pekerjaan :</b></label>
   			<input type="text" name="edit-pekerjaan" class="span5" placeholder="Pekerjaan" value="{{ profile.work }}" required><br><br>
-  			<button type="submit" class="btn ">Change</button>
+  			<button type="submit" class="btn btn-primary">UPDATE</button>
   		</div>	
 	</form>
 </div>

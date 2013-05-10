@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block content %}
+<div id="profile">
+			<form class="form-inline" action="{{ url_for('forgot') }}" method="POST">
+				<label><b>Your Mail :</b></label>
+  				<input type="text" name="forgot-password" class="span4" placeholder="Your Email" required>
+  				<button type="submit" class="btn ">Reset </button>
+			</form>		
+</div>			
+{% endblock %}

@@ -3,9 +3,11 @@
 	<head>
 		<title>ALUMNI SMAN2 BANDA ACEH</title>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/sample.css') }}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">	
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.4.4.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/ckeditor.js') }}"></script>
 		<script type="text/javascript">
 			var now = new Date(); /*Important Line, that you all missing... */
 			var checkyear = now.getUTCFullYear() + 1;
@@ -79,7 +81,8 @@
 				<div id="masuk">
 				{% if auth %}
 				<ul>	
-					<li><a href="{{ url_for('index') }}" >HOME</a></li> 	
+					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
+					<li><a href="{{ url_for('berita') }}">BERITA</a></li> 	
 					<li><a href="#" class="setting"><b><u>{{ get_user }}</u></b> &raquo</a>
 						<ul>
 							<li><a href="{{ url_for('edit_user') }}">SETTINGS</a></li>
@@ -104,6 +107,7 @@
 	
 	<!--CONTENT-->
 	{% block content %}
+
 	<div id="content">
 <!--	<p><b>Search by</b></p>-->
 		<div class="bs-docs-example">

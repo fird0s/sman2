@@ -3,6 +3,8 @@ from models import *
 sman2 = Flask(__name__)
 import os, random
 from sqlalchemy.orm.exc import NoResultFound
+from datetime import datetime
+import time
 
 @sman2.route('/',  methods=['GET', 'POST'])
 def index():
@@ -49,7 +51,7 @@ def register():
 		   request.form["rg-password"]:
 			try:
 				user = Users(request.form["rg-name"], request.form["rg-fullname"], request.form["rg-password"], \
-			    	         request.form["rg-mail"], request.form["rg-angkatan"], request.form["rg-hp"], "", request.remote_addr)
+			    	         request.form["rg-mail"], request.form["rg-angkatan"], request.form["rg-hp"], "", request.remote_addr, "user")
 				session_db.add(user)
 				session_db.commit()
 				session_db.close()
@@ -100,7 +102,7 @@ def user():
 				if check.password == request.form["user-password"]:
 					session['user'] = request.form['user-login']
 					
-					return redirect(url_for('index'))
+					return redirect(url_for('profile', show_profil=check.username))
 					session_db.close()	
 				else: 
 					return "your password is wrong"	
@@ -109,6 +111,57 @@ def user():
 	if "user" in session:
 		return "you logged as %s" % session['user']			
 	return render_template("user.html", check=check)
+
+
+@sman2.route("/berita/", methods=['GET', 'POST'])
+def berita():
+	get_user = session.get("user", None)
+	admin = session_db.query(Users).filter_by(username = get_user).one()
+	news = session_db.query(Berita).all()[10:10]
+	data = admin.status == "admin"
+	if "user" in session:
+		auth=True
+	else:
+		auth=None
+		return redirect(url_for("index"))
+	return render_template("berita.html", auth=auth, get_user=get_user, data=data, news=news)
+
+
+@sman2.route("/berita/add/", methods=['GET', 'POST'])
+def berita_add():
+	get_user = session.get("user", None)
+	data = session_db.query(Users).filter_by(username = get_user).one()
+	if data.status != "admin":
+		return "you have no permission to add Berita"
+	if "user" in session:
+		auth=True
+	else:
+		auth=None
+		return redirect(url_for("index"))
+	if request.method == "POST":
+		if request.form["judul-berita"] and request.form["isi-berita"]:
+			berita = Berita(judul=request.form["judul-berita"], content=request.form["isi-berita"], user_adder=get_user, time=datetime.now())
+			session_db.add(berita)
+			session_db.commit()
+			session_db.close()
+			return redirect(url_for("berita"))
+		else:	
+			return "asdsa"	
+	return render_template("berita_add.html", get_user=get_user, auth=auth)
+
+@sman2.route("/berita/delete/<int:id>/")
+def berita_delete(id):
+	get_user = session.get("user", None)
+	admin = session_db.query(Users).filter_by(username = get_user).one()
+	if admin.status != "admin":
+		return "<h1>you have not permission</h1>."
+	return "still development"
+
+
+@sman2.route("/berita/update/<int:id>/")
+def berita_update(id):
+	return "this is for update berita"
+
 
 @sman2.route("/edit/", methods=['GET', 'POST'])
 def edit_user():
@@ -152,10 +205,22 @@ def logout():
 	profil_data.ip = request.remote_addr
 	session_db.add(profil_data)
 	session_db.commit()
-	session_db.close()
+    	session_db.close()
 	session.pop("user", None)
 	return redirect(url_for('index'))
 
+
+@sman2.route('/forgot/', methods=["POST", "GET"])
+def forgot():
+	if request.method == "POST":
+		if request.form["forgot-password"]:
+			try:
+				reset = session_db.query(Users).filter_by(email = request.form["forgot-password"]).one()
+				return "<p class='alert alert-success'><b>Well done</b> | Password has been sent to your 							email</p>"
+			except sqlalchemy.orm.exc.NoResultFound:	
+				return "<p class='alert alert-error'><b>ERROR</b> | Your email does not exist</p>"
+				  
+	return render_template("forgot.html")
 
 @sman2.errorhandler(404)
 def not_found(error):
