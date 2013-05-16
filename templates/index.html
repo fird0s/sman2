@@ -15,7 +15,7 @@
 			var daily =now.getUTCDate();
 		</script>
 		<script>
-	$(document).ready(function(){
+			$(document).ready(function(){
 			$(".overlogin").click(function(){
 				$("#singup").css("display","none");	
 			    $("#login").fadeIn(300, 'linear', function(){
@@ -57,6 +57,14 @@
 			
 		});
 		</script>
+		<script>
+		$(document).ready(function(){
+			$('#angkatan').click(function(){
+					var data = $('#angkatan').val();
+					window.location = ("/angkatan/"+data);
+			});
+		});	
+		</script>
 		
 	</head>
 	
@@ -82,8 +90,7 @@
 				{% if auth %}
 				<ul>	
 					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
-					<li><a href="{{ url_for('berita') }}">BERITA</a></li> 	
-					<li><a href="#" class="setting"><b><u>{{ get_user }}</u></b> &raquo</a>
+					<li><a href="/user/{{ get_user }}" class="setting"><b><u>{{ get_user }}</u></b> &raquo</a>
 						<ul>
 							<li><a href="{{ url_for('edit_user') }}">SETTINGS</a></li>
 							<li><a href="{{ url_for('logout') }}">LOG OUT</a></li>
@@ -109,12 +116,32 @@
 	{% block content %}
 
 	<div id="content">
-<!--	<p><b>Search by</b></p>-->
+	<center>
+		<form class="form-inline navbar-form" method="GET" action="/search/"> 
+			<input type="text" class="span3" name="search-name" placeholder="Search Your Friend">
+			<button type="submit" class="btn btn-warning">Search Now.</button>
+		</form><br>
+		
+			<label><b>Filter Dari tingkatan:</b></label>
+			<select id="angkatan">
+				<script>
+					var now = new Date(); /*Important Line, that you all missing... */
+					var checkyear = now.getUTCFullYear() + 1;
+						
+						for (x=1945; x<checkyear; x++)
+							{	
+								document.write("<option value="+x+">"+x+"</option>");
+							}	
+				</script>
+			</select></b>
+			
+	</center>
+	<hr>
 		<div class="bs-docs-example">
             <table class="table table-hover table-striped">
               <thead>
                 <tr>
-                  <th>NO</th>
+      
                   <th>NAMA </th>
                   <th>ANGKATAN</th>
                   <th>EMAIL</th>
@@ -124,8 +151,8 @@
               <tbody>
               	{% for alluser in all_user %}
                 <tr>
-                  <td>{{ alluser.id }}</td>
-                  <td><a href="{{ alluser.username }}">{{ alluser.fullname }}</a></td>
+                
+                  <td><a href="/user/{{ alluser.username }}">{{ alluser.fullname }}</a></td>
                   <td>{{ alluser.angkatan }}</td>
                   <td>{{ alluser.email }}</td>
                   <td>{{ alluser.handphone }}</td>
@@ -135,7 +162,9 @@
             </table>
           
           </div>
+	<hr>	
 	</div>
+
 	{% endblock %}
 	<!-- END CONTENT-->
 	
@@ -149,7 +178,7 @@
   				<input type="text" name="user-login" class="span4" placeholder="Username" required><br><br>
   				<input type="password" name="user-password" class="input-small span4" placeholder="Password" required><br><br>
        		    <button type="submit" class="btn btn-large">Sign in</button>
-				<a class="lupapassword" href="#">LUPA PASSWORD ?</a>
+				<a class="lupapassword" href="{{ url_for('forgot') }}">LUPA PASSWORD ?</a>
 			</form>
 	</div>
 	<!--END LOGIN -->
@@ -164,6 +193,7 @@
   			<input type="text" name="rg-fullname" class="span4" placeholder="Fullname" required><br><br>
   			<input type="email" name="rg-mail" class="span4" placeholder="Email" required>
   			<input type="password" name="rg-password" class="span3" placeholder="Password" required><br><br>
+  			<b>ANGKATAN : 
   			<select name="rg-angkatan">
 				<script>
 					var now = new Date(); /*Important Line, that you all missing... */
@@ -173,8 +203,8 @@
 								document.write("<option value="+x+">"+x+"</option>");
 							}	
 				</script>
-			</select>
-  			<input type="text" name="rg-hp" class="span4" placeholder="No-hp" required><br><br>
+			</select></b>
+  			<input type="text" name="rg-hp" class="span3" placeholder="No-hp" required><br><br>
        	    <button type="submit" class="btn btn-large">Register</button>
 			<a class="overlogin" href="#">Sudah punya akun !</a>
 		</form>

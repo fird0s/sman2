@@ -3,25 +3,27 @@
 <div id="profile">
 	<form method="POST" action="{{ url_for('edit_user') }}">
 		<div class="input-prepend">
+			<label><b>Username : </b></label>
 		 	<span class="add-on">@</span>
-  			<input class="span2" id="prependedInput" type="text" value="{{ get_user }}" disabled><br><br>
+  			<input class="span4" id="prependedInput" type="text" value="{{ get_user }}" disabled><br><br>
   			<label><b>Fullname : </b></label>
   			<input type="text" name="edit-fullname" class="span5" placeholder="Fullname" value="{{ profile.fullname }}" required><br><br>
-  			<label><b>E-mail : </b></label>
-  			<input type="text" name="edit-email" class="span5" placeholder="Email" value="{{ profile.email }}" 	required><br><br>
-  			<label><b>Phone :</b></label>
-  			<input type="text" name="edit-handphone" class="span5" placeholder="Phone number" value="{{ profile.handphone }}" required><br><br>
-  			<label><b>Angkatan : </b></label>
+  			<label><b>Angkatan : </b></label> 
   			<select name="edit-angkatan" class="span5" >
 				<script>
 					var now = new Date(); /*Important Line, that you all missing... */
 					var checkyear = now.getUTCFullYear() + 1;
+						document.write("<option disabled='disabled' value='{{ profile.handphone }}'>{{ profile.angkatan }}</option>")
 						for (x=1945; x<checkyear; x++)
 							{	
 								document.write("<option value="+x+">"+x+"</option>");
 							}	
 				</script>
 			</select><br><br>
+  			<label><b>E-mail : </b></label>
+  			<input type="text" name="edit-email" class="span5" placeholder="Email" value="{{ profile.email }}" 	required><br><br>
+  			<label><b>Phone :</b></label>
+  			<input type="text" name="edit-handphone" class="span5" placeholder="Phone number" value="{{ profile.handphone }}" required><br><br>
 			<label><b>Pekerjaan :</b></label>
   			<input type="text" name="edit-pekerjaan" class="span5" placeholder="Pekerjaan" value="{{ profile.work }}" required><br><br>
   			<button type="submit" class="btn btn-primary">UPDATE</button>

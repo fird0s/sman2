@@ -75,7 +75,7 @@ def generate_csrf_token():
     
 sman2.jinja_env.globals['csrf_token'] = generate_csrf_token  	
 	
-@sman2.route('/<show_profil>')
+@sman2.route('/user/<show_profil>')
 def profile(show_profil):
 	get_user = session.get("user", None)
 	if "user" in session:
@@ -112,56 +112,24 @@ def user():
 		return "you logged as %s" % session['user']			
 	return render_template("user.html", check=check)
 
+@sman2.route('/admin/', methods=["GET", "POST"])
+def admin():
+	return "hello"
 
-@sman2.route("/berita/", methods=['GET', 'POST'])
-def berita():
+@sman2.route("/search/")
+def search():
 	get_user = session.get("user", None)
-	admin = session_db.query(Users).filter_by(username = get_user).one()
-	news = session_db.query(Berita).all()[10:10]
-	data = admin.status == "admin"
 	if "user" in session:
 		auth=True
 	else:
 		auth=None
-		return redirect(url_for("index"))
-	return render_template("berita.html", auth=auth, get_user=get_user, data=data, news=news)
-
-
-@sman2.route("/berita/add/", methods=['GET', 'POST'])
-def berita_add():
-	get_user = session.get("user", None)
-	data = session_db.query(Users).filter_by(username = get_user).one()
-	if data.status != "admin":
-		return "you have no permission to add Berita"
-	if "user" in session:
-		auth=True
-	else:
-		auth=None
-		return redirect(url_for("index"))
-	if request.method == "POST":
-		if request.form["judul-berita"] and request.form["isi-berita"]:
-			berita = Berita(judul=request.form["judul-berita"], content=request.form["isi-berita"], user_adder=get_user, time=datetime.now())
-			session_db.add(berita)
-			session_db.commit()
-			session_db.close()
-			return redirect(url_for("berita"))
-		else:	
-			return "asdsa"	
-	return render_template("berita_add.html", get_user=get_user, auth=auth)
-
-@sman2.route("/berita/delete/<int:id>/")
-def berita_delete(id):
-	get_user = session.get("user", None)
-	admin = session_db.query(Users).filter_by(username = get_user).one()
-	if admin.status != "admin":
-		return "<h1>you have not permission</h1>."
-	return "still development"
-
-
-@sman2.route("/berita/update/<int:id>/")
-def berita_update(id):
-	return "this is for update berita"
-
+	if request.method == "GET":
+		if request.args.get("search-name", ""):
+			nama = request.args.get("search-name", "")
+			get_fullname = session_db.query(Users).filter(Users.fullname.like("%"+request.args.get("search-name", "")+"%"))
+		else:
+			return "Anda Belom Mengiisikan Nama."	
+	return render_template("search.html", get_fullname=get_fullname, nama=nama, auth=auth, get_user=get_user)
 
 @sman2.route("/edit/", methods=['GET', 'POST'])
 def edit_user():
@@ -169,7 +137,6 @@ def edit_user():
 		auth=True
 	else:
 		auth=None
-		return redirect(url_for("index"))
 	get_user = session.get("user", None)	
 	profile = session_db.query(Users).filter_by(username = get_user).one()
 	if request.method == "POST":
@@ -181,20 +148,22 @@ def edit_user():
 			profile.work = request.form["edit-pekerjaan"]
 			session_db.add(profile)
 			session_db.commit()
+			return redirect(url_for("edit_user"))
 		except sqlalchemy.exc.IntegrityError:
 			return "please <b>%s</b> alredy used by other people !"  % (request.form["edit-email"])
 	return render_template("edit_user.html", auth=auth, get_user=get_user, profile=profile)
 
-@sman2.route('/search/<angkatan>/')
-def search(angkatan):
-	lulusan = angkatan
-	get_user = session.get("user", None)
+
+@sman2.route('/angkatan/<cari_angkatan>/', methods=["POST", "GET"])
+def angkatan(cari_angkatan):
 	if "user" in session:
-		auth = True
+		auth=True
 	else:
-		auth = None
-	data = session_db.query(Users).filter_by(angkatan = angkatan).all()
-	return render_template("search.html", auth=auth, get_user=get_user, data=data, lulusan=lulusan)
+		auth=None
+	get_user = session.get("user", None)	
+	get_fullname = session_db.query(Users).filter_by(angkatan = cari_angkatan).all()
+	angkatan = cari_angkatan
+	return render_template("angkatan.html", auth=auth, get_user=get_user, get_fullname=get_fullname, angkatan=angkatan)
 
 @sman2.route('/logout/', methods=["POST", "GET"])
 def logout():
@@ -216,9 +185,9 @@ def forgot():
 		if request.form["forgot-password"]:
 			try:
 				reset = session_db.query(Users).filter_by(email = request.form["forgot-password"]).one()
-				return "<p class='alert alert-success'><b>Well done</b> | Password has been sent to your 							email</p>"
+				return "<p class='alert alert-success'><b>Well done</b> | Password has been sent to your mail.</p>"
 			except sqlalchemy.orm.exc.NoResultFound:	
-				return "<p class='alert alert-error'><b>ERROR</b> | Your email does not exist</p>"
+				return "<p class='alert alert-error'><b>ERROR</b> | Your email does not exist.</p>"
 				  
 	return render_template("forgot.html")
 
@@ -238,8 +207,7 @@ def test():
 	return request.query_string
 
 if __name__ == "__main__":
-	
 	sman2.secret_key = '_Wx0ksck~\[p99923@#@!#!@#423raakleas'
 	sman2.debug = True
-	sman2.run(host="127.0.0.1")
+	sman2.run()
 

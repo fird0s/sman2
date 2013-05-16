@@ -71,6 +71,14 @@ class Log(Base):
 	request = Column(String(400))		
 	ip = Column(String(100))		
 		
+class Admin(Base):
+	__tablename__ = "admin"
+		
+	id = Column(Integer, primary_key=True)
+	nama = Column(String(100))			
+	password = Column(String(100))
+	ip = Column(String(100))
+			
 Session = sessionmaker(bind=engine)
 session_db = Session()	
 		

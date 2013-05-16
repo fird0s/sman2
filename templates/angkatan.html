@@ -1,21 +1,26 @@
 {% extends "index.html" %}
+
 {% block content %}
-	<div id="content">
+<div id="content">
 	<center>
     <form class="form-inline navbar-form" method="GET" action="/search/"> 
       <input type="text" class="span3" name="search-name" placeholder="Search Your Friend">
         <button type="submit" class="btn btn-warning">Search Now.</button>
-<!--        <select id="angkatan">-->
-<!--				<script>-->
-<!--					var now = new Date(); /*Important Line, that you all missing... */-->
-<!--					var checkyear = now.getUTCFullYear() + 1;-->
-<!--						for (x=1945; x<checkyear; x++)-->
-<!--							{	-->
-<!--								document.write("<option value="+x+">"+x+"</option>");-->
-<!--							}	-->
-<!--				</script>-->
-<!--			</select></b>-->
-    </form>
+    </form><br>
+    
+    <label><b>Filter Dari tingkatan:</b></label>
+			<select id="angkatan">
+				<script>
+					var now = new Date(); /*Important Line, that you all missing... */
+					var checkyear = now.getUTCFullYear() + 1;
+						
+						for (x=1945; x<checkyear; x++)
+							{	
+								document.write("<option value="+x+">"+x+"</option>");
+							}	
+				</script>
+			</select></b>
+			
     
   </center>
   <hr>
@@ -31,9 +36,6 @@
               </thead>
               <tbody>
              {% if get_fullname %}  
-               <div class="alert">
-                  <strong>Hasil pencaharian <u>{{ nama }}</u>.</strong>
-               </div>
 				        {% for data in get_fullname %}		
                 <tr>
                   <td><a href="/{{ data.username }}">{{ data.fullname }}</a></td>
@@ -41,11 +43,14 @@
                   <td>{{ data.email }}</td>
                   <td>{{ data.handphone }}</td>
                 </tr>
-                {% endfor %}
+                	{% endfor %}
+                {% else %}
+                <div class="alert">
+                  <strong>Tidak Ada Entry Untuk Angkatan <u><i>{{ angkatan }}</i></u>.</strong>
+                </div>	
              {% endif  %}
               </tbody>
             </table>
-          
           </div>
 	</div>
 {% endblock %}

@@ -2004,8 +2004,10 @@ table {
 }
 
 .table {
+  border: 1px solid 	#FF5919;
   width: 100%;
   margin-bottom: 20px;
+ 
 }
 
 .table th,
@@ -2019,6 +2021,7 @@ table {
 }
 
 .table th {
+	 
   background: #FF5919;
   font-weight: bold;
   color: white;
@@ -2026,6 +2029,7 @@ table {
 }
 
 .table thead th {
+
   vertical-align: bottom;
 }
 

@@ -64,8 +64,10 @@ body {
 	display: block; 
 	position: absolute; 	}
 
-#masuk ul li ul {display: none; margin-left: 100px;}
-#masuk ul li ul li a{background: white; display: block; margin-left: 60px; margin-top: padding: 5px; text-align: center; border-bottom: 2px solid orange; color: black; border-radius: 10px; }
+#masuk ul li ul {display: none; margin-left: 20px;}
+#masuk ul li ul li a{background: white; display: block; margin-left: 60px; 
+					 margin-top: padding: 5px; text-align: center; border-bottom: 2px solid orange;
+				     color: black; border-radius: 1px; }
 #masuk ul li a{
 		text-decoration: none;
 		padding: 5px;	
@@ -89,7 +91,7 @@ body {
 #content {
 	clear: both;
 	width: 1000px;
-	border: 1px solid 	#FF5919;
+	
 	margin: auto;
 	margin-top: 30px;
 	padding: 5px;	
