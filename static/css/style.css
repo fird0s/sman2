@@ -87,7 +87,6 @@ body {
 	color: black;
 }
 
-
 #content {
 	clear: both;
 	width: 1000px;
@@ -165,15 +164,15 @@ body {
 }
 
 #profile {width: 500px; margin: 0 auto; margin-top: 30px; padding: 5px; background: white ; border: 5px solid #FF5919;
-		padding: 20px; border-radius: 5px;} 
+		padding: 10px; border-radius: 5px;} 
 
-#profile ul li {font-size: 20px;
+#profile ul li {font-size: 15px;
 				padding: 5px;
 				border-bottom: 1px solid gray;
 				display: block;
 				}
 				
-#profile li b{font-size: 20px; margin-right: 10px; text-decoration: underline; font-style: italic;}				
+#profile li b{font-size: 15px; margin-right: 10px; text-decoration: underline; font-style: italic;}				
 
 
 

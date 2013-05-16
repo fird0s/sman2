@@ -1,0 +1,27 @@
+{% extends "admin.html" %}
+{% block content %}
+<div id="content">
+	<h2><u>Contact</u></h2>
+	{% if all_contact %}
+	
+		{% for contact in all_contact %}	
+	<div id="profile">	
+	<ul>
+		<li> Nama :   {{ contact.name }} </li>
+		<li> E-mail :   {{ contact.email }} </li>
+		<li> No HP  : {{ contact.handphone }} </li>
+		<li><b> Message</b> : <p> {{ contact.message }}</p> 
+		<a href="/admin/contact/{{ contact.id }}"><button type="submit" class="btn btn-success ">Delete Message</button></a>
+	</ul>	
+	</div>
+		{% endfor %}
+	
+		
+       {% else %}
+       		<div class="alert">
+                  <strong>No Contact !!!</i></u>.</strong>
+            </div> 
+     {% endif  %}     
+	
+</div>
+{% endblock %}

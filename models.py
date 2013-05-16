@@ -45,7 +45,7 @@ class Contact(Base):
 	name = Column(String(30))
 	email = Column(String(30))
 	handphone = Column(Integer)
-	message = Column(String(20))			
+	message = Column(TEXT)			
 	
 	def __init__(self, name, email, handphone, message):
 		self.name = name	

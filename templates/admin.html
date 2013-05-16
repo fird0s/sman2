@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="id">
+	<head>
+		<title>ALUMNI SMAN2 BANDA ACEH</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/sample.css') }}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">	
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.4.4.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/ckeditor.js') }}"></script>
+	</head>
+	
+<body>
+	<!--<marquee><h4>STILL MAINTANANCE YOUR DATA WILL BE LOSE !</h4></marquee>-->
+	<!-- HEADER -->
+	<div id="header">
+		<div id="header-dalam">
+	      <div id="colom">
+		   <a href="/admin/"><img class="logo-header" src="{{url_for('static', filename='img/logo-sma-2.jpg')}}"></img></a>
+		  </div>	
+		  <div id="colom">
+			<p class="database"><a href="/admin/">ADMIN PAGES</a></p>
+		  </div>
+		  <div id="colom">
+		  	<div id="masuk">
+				
+				<ul>
+					<li><a href="/admin/" class="setting"><b><u>HOme</u></b></a></li> 	
+					<li><a href="/admin/contact/" class="setting"><b><u>Contact</u></b></a></li> 
+					<li><a href="" class="setting"><b><u>Log Error</u></b></a></li> 
+					<li><a href="" class="setting"><b><u>Edit User</u></b></a></li> 
+				</ul>	
+				
+				</div>
+		  </div>
+		  {% block content %}
+		  {% endblock %}
+		  
+	</div>	  
+</body>
+</html>

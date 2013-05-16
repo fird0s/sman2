@@ -113,9 +113,25 @@ def user():
 	return render_template("user.html", check=check)
 
 @sman2.route('/admin/', methods=["GET", "POST"])
-def admin():
-	return "hello"
+def admin():	
+	return render_template("admin.html")
+	
+@sman2.route('/admin/contact/', methods=["GET", "POST"])	
+def admincontact():
+	all_contact = session_db.query(Contact).all()
+	return render_template("admin-contact.html", all_contact=all_contact)
 
+@sman2.route("/admin/contact/<int:hapus>/")
+def contact_delete(hapus): 
+	try:
+		delete_contact = session_db.query(Contact).filter_by(id = hapus).one()	
+		session_db.delete(delete_contact)
+		session_db.commit()
+		session_db.close()
+	except sqlalchemy.orm.exc.NoResultFound:
+		return "<script>alert('No data');</script>"
+	return redirect(url_for("admincontact"))		
+	
 @sman2.route("/search/")
 def search():
 	get_user = session.get("user", None)
