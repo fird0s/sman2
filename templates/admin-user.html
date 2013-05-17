@@ -1,0 +1,30 @@
+{% extends "admin.html" %}
+{% block content %}
+<div id="content">
+	<h2><u>Manage Users</u></h2>
+	{% if all_user %}
+	<div class="bs-docs-example">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>NAMA </th>
+                  <th>ANGKATAN</th>
+                  <th>EMAIL</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+              	{% for alluser in all_user %}
+                <tr>     
+                  <td><a href="/user/{{ alluser.username }}">{{ alluser.fullname }}</a></td>
+                  <td>{{ alluser.angkatan }}</td>
+                  <td>{{ alluser.email }}</td>
+                  <td><a href="/admin/user/delete/{{ alluser.id }}">hapus</a> / <a href="/admin/user/edit/{{ alluser.id }}">edit</a></td>                 
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>          
+          </div>
+	{% endif %}
+</div>
+{% endblock %}

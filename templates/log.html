@@ -1,0 +1,17 @@
+{% extends "admin.html" %}
+{% block content %}
+<div id="content">
+	<h2><u>Log Error</u></h2>
+	
+	
+	{% for log in all_log %}
+		<div class="alert">
+                  <strong><u>LINK</u> : {{ log.request }}</strong> ~
+                  <strong><u>IP</u> : {{ log.ip }}</strong> ~
+                  <strong><u>TIME</u> : {{ log.time }}</strong> ~
+        </div> 
+	{% endfor %}
+	
+	
+</div>
+{% endblock %}

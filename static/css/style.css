@@ -11,11 +11,13 @@ body {
 }
 
 #header{
+	
+	width: 100%;
 	border: 1px solid #FFEFEF;
 	height: 80px;
 	margin: auto;
 	background: #FFEFEF;
-	
+	z-index: 10;
 }
 
 .logo-header{
@@ -65,7 +67,7 @@ body {
 	position: absolute; 	}
 
 #masuk ul li ul {display: none; margin-left: 20px;}
-#masuk ul li ul li a{background: white; display: block; margin-left: 60px; 
+#masuk ul li ul li a{background: white; display: block; margin-left: 160px; 
 					 margin-top: padding: 5px; text-align: center; border-bottom: 2px solid orange;
 				     color: black; border-radius: 1px; }
 #masuk ul li a{

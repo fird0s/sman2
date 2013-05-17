@@ -113,11 +113,26 @@ def user():
 	return render_template("user.html", check=check)
 
 @sman2.route('/admin/', methods=["GET", "POST"])
-def admin():	
-	return render_template("admin.html")
+def admin():
+	if "admin" in session:
+		auth_admin=True
+	else:
+		auth_admin=False
+	if request.method == "POST":
+		if request.form["admin-user"] == "masuk" and request.form["admin-pass"] == "masuk":
+			session['admin'] = "admin"
+	all_log = all_log = session_db.query(Log).all()[0:20]
+	all_log.reverse()		
+	all_contact = session_db.query(Contact).all()[0:20]
+	all_contact.reverse()
+	all_user = session_db.query(Users).all()[0:20]
+	all_user.reverse()
+	return render_template("admin.html", auth_admin=auth_admin, all_log=all_log, all_contact=all_contact, all_user=all_user)
 	
 @sman2.route('/admin/contact/', methods=["GET", "POST"])	
 def admincontact():
+	if "admin" not in session:
+		return redirect(url_for("admin"))
 	all_contact = session_db.query(Contact).all()
 	return render_template("admin-contact.html", all_contact=all_contact)
 
@@ -131,6 +146,50 @@ def contact_delete(hapus):
 	except sqlalchemy.orm.exc.NoResultFound:
 		return "<script>alert('No data');</script>"
 	return redirect(url_for("admincontact"))		
+	
+@sman2.route("/admin/user/")
+def admin_user():
+	if "admin" not in session:
+		return redirect(url_for("admin"))
+	all_user = session_db.query(Users).all()
+	return render_template("admin-user.html", all_user=all_user)	
+	
+@sman2.route("/admin/user/delete/<int:hapus>")
+def admin_user_delete(hapus):
+	if "admin" not in session:
+		return redirect(url_for("admin"))
+	try:
+		action = session_db.query(Users).filter_by(id = hapus).one()
+		session_db.delete(action)
+		session_db.commit()
+		session_db.close()
+		return redirect(url_for("admin_user"))
+	except sqlalchemy.orm.exc.NoResultFound:
+		return redirect(url_for("admin_user"))		
+	return redirect(url_for("admin_user"))
+
+@sman2.route("/admin/user/edit/<int:edit>/", methods=["GET", "POST"])
+def admin_user_edit(edit):
+	if "admin" not in session:
+		return redirect(url_for("admin"))
+	action = session_db.query(Users).filter_by(id = edit).one()
+	if request.method == "POST":	
+		try:
+			action.username = request.form["edit-username"]
+			action.fullname = request.form["edit-fullname"]
+			action.email = request.form["edit-email"]
+			action.handphone = request.form["edit-handphone"]
+			action.angkatan = request.form["edit-angkatan"]
+			action.work = request.form["edit-pekerjaan"]
+			session_db.add(action)
+			session_db.commit()
+			session_db.close() 
+			session.pop("user", None)
+			session['user'] = request.form['edit-username']
+			return redirect(url_for("admin_user"))
+		except sqlalchemy.exc.IntegrityError:
+			return "Your Email or Username alredy use"	
+	return render_template("admin_user_edit.html", action=action)				
 	
 @sman2.route("/search/")
 def search():
@@ -164,11 +223,20 @@ def edit_user():
 			profile.work = request.form["edit-pekerjaan"]
 			session_db.add(profile)
 			session_db.commit()
+			session_db.close()
 			return redirect(url_for("edit_user"))
 		except sqlalchemy.exc.IntegrityError:
 			return "please <b>%s</b> alredy used by other people !"  % (request.form["edit-email"])
 	return render_template("edit_user.html", auth=auth, get_user=get_user, profile=profile)
 
+@sman2.route("/admin/log-error/")
+def log_error():
+	if "admin" not in session:
+		return redirect(url_for("admin"))
+	all_log = session_db.query(Log).all()[0:1000]
+	all_log.reverse()
+	session_db.close()
+	return render_template("log.html", all_log=all_log)
 
 @sman2.route('/angkatan/<cari_angkatan>/', methods=["POST", "GET"])
 def angkatan(cari_angkatan):
@@ -209,7 +277,7 @@ def forgot():
 
 @sman2.errorhandler(404)
 def not_found(error):
-	log = Log(request=request.url, ip=request.remote_addr)
+	log = Log(request=request.url, ip=request.remote_addr, time=datetime.now())
 	session_db.add(log)
 	session_db.commit()
 	session_db.close()

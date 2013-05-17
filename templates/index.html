@@ -90,6 +90,7 @@
 				{% if auth %}
 				<ul>	
 					<li><a href="{{ url_for('index') }}">HOME</a></li> 	
+					<li><a href="{{ url_for('admin') }}">ADMIN</a></li> 	
 					<li><a href="/user/{{ get_user }}" class="setting"><b><u>{{ get_user }}</u></b> &raquo</a>
 						<ul>
 							<li><a href="{{ url_for('edit_user') }}">SETTINGS</a></li>
@@ -234,7 +235,7 @@
 	<div id="footer">
 		<li><a href="https://firdaus.jones.dk" target="blank">DEVELOPED-BY</a></li>
 		<li><a class="overlay-contact">CONTACT/FEEDBACK</a></li>
-		<li><a href="#">DONATE</a></li>
+<!--		<li><a href="#">DONATE</a></li>-->
 	</div>
 	<!--END FOOTER -->
 </body>

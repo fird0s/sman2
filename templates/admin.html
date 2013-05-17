@@ -23,17 +23,65 @@
 		  </div>
 		  <div id="colom">
 		  	<div id="masuk">
-				
 				<ul>
-					<li><a href="/admin/" class="setting"><b><u>HOme</u></b></a></li> 	
+					<li><a href="/" class="setting"><b><u>Beranda</u></b></a></li> 	
+					<li><a href="/admin/" class="setting"><b><u>Admin</u></b></a></li> 	
+					<li><a href="/admin/user/" class="setting"><b><u>Manage Users</u></b></a></li> 
 					<li><a href="/admin/contact/" class="setting"><b><u>Contact</u></b></a></li> 
-					<li><a href="" class="setting"><b><u>Log Error</u></b></a></li> 
-					<li><a href="" class="setting"><b><u>Edit User</u></b></a></li> 
+					<li><a href="/admin/log-error/" class="setting"><b><u>Log Error</u></b></a></li> 
+					
 				</ul>	
-				
 				</div>
 		  </div>
 		  {% block content %}
+		 
+		  <div id="content">
+
+		  	{% if auth_admin %}
+		  	<hr>
+		  		<h3>New Contact</h3>
+	   	    		{% for contact in all_contact %}
+						<div class="alert">
+               			   <strong><u>NAME</u> : {{ contact.name }}</strong> ~
+                  		   <strong><u>EMAIL</u> : {{ contact.email }}</strong> ~
+                  		   <strong><u>HP</u> : {{ contact.handphone }}</strong> ~
+                  		   <strong><u>MESSAGE</u> : {{ contact.message }}</strong> ~
+        				</div> 
+					{% endfor %}
+					<hr>
+					<h3>New User</h3>
+	   	    		{% for user in all_user %}
+						<div class="alert">
+               			   <strong><u>FULLNAME</u> : {{ user.fullname }}</strong> ~
+                  		   <strong><u>ANGKATAN</u> : {{ user.angkatan }}</strong> ~
+                  		   <strong><u>WORK</u> : {{ user.work }}</strong> ~
+        				</div> 
+					{% endfor %}
+					<hr>
+					
+	   	    	<h3>New Log Error.</h3>
+	   	    		{% for log in all_log %}
+						<div class="alert">
+               			   <strong><u>LINK</u> : {{ log.request }}</strong> ~
+                  		   <strong><u>IP</u> : {{ log.ip }}</strong> ~
+                  		   <strong><u>TIME</u> : {{ log.time }}</strong> ~
+        				</div> 
+					{% endfor %}
+					<hr>
+	   	    	
+	   	    	
+		 	{% else %}
+		 		
+	   	    <form action="/admin/" method="POST">
+		 	 <label><b> Admin : </b> </label>
+		 	 <input type="text"  name="admin-user" class="span5" placeholder="Admin"><br>
+		 	 <label><b> Password : </b> </label>
+		 	 <input type="password" name="admin-pass" class="span5" placeholder="Password"><br>
+		 	 <button type="submit" class="btn btn-success">Login Admin</button>
+		 	</form>
+		 	{% endif %}
+		 	</center>
+		  </div>
 		  {% endblock %}
 		  
 	</div>	  

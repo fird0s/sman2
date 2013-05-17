@@ -70,6 +70,7 @@ class Log(Base):
 	id = Column(Integer, primary_key=True)
 	request = Column(String(400))		
 	ip = Column(String(100))		
+	time = Column(DATE)
 		
 class Admin(Base):
 	__tablename__ = "admin"
