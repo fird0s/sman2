@@ -176,6 +176,7 @@
 		    -60px;">&times;</h4>
 		<h3>LOGIN ...</h3>
 			<form class="form-inline" action="/user/" method="POST">
+  				<input name=_csrf_token type=hidden value="{{ csrf_token() }}">
   				<input type="text" name="user-login" class="span4" placeholder="Username" required><br><br>
   				<input type="password" name="user-password" class="input-small span4" placeholder="Password" required><br><br>
        		    <button type="submit" class="btn btn-large">Sign in</button>
@@ -217,7 +218,7 @@
 		<h4 class="contact-keluar" style="margin-left: 400px; color: #FF5919; font-size: 40px; ">&times;</h4>
 		<h5>CONTACT/FEEDBACK ...</h5>
 		<form class="form-inline"  action="/contact/" method="POST">
-  				
+  				<input name=_csrf_token type=hidden value="{{ csrf_token() }}">
   				<input type="text" name="contact-name" class="span4" placeholder="Your name" required><br><br>
   				<input type="text" name="contact-email" class="input-small span4" placeholder="Email" required><br><br>
   				<input type="text" name="contact-hp" class="span4" placeholder="No-Handphone" required><br><br>

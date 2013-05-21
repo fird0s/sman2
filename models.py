@@ -71,6 +71,7 @@ class Log(Base):
 	request = Column(String(400))		
 	ip = Column(String(100))		
 	time = Column(DATE)
+	referer = Column(TEXT)
 		
 class Admin(Base):
 	__tablename__ = "admin"

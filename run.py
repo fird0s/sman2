@@ -70,7 +70,7 @@ def register():
 	
 def generate_csrf_token(): 
     if '_csrf_token' not in session:
-        session['_csrf_token'] = str(random.triangular(low=9.2, high=1.0, mode=None))
+        session['_csrf_token'] = random.getrandbits(128)
     return session['_csrf_token']
     
 sman2.jinja_env.globals['csrf_token'] = generate_csrf_token  	
@@ -229,14 +229,14 @@ def edit_user():
 			return "please <b>%s</b> alredy used by other people !"  % (request.form["edit-email"])
 	return render_template("edit_user.html", auth=auth, get_user=get_user, profile=profile)
 
-@sman2.route("/admin/log-error/")
-def log_error():
-	if "admin" not in session:
-		return redirect(url_for("admin"))
-	all_log = session_db.query(Log).all()[0:1000]
-	all_log.reverse()
-	session_db.close()
-	return render_template("log.html", all_log=all_log)
+#@sman2.route("/admin/log-error/")
+#def log_error():
+#	if "admin" not in session:
+#		return redirect(url_for("admin"))
+#	all_log = session_db.query(Log).all()[0:1000]
+#	all_log.reverse()
+#	session_db.close()
+#	return render_template("log.html", all_log=all_log)
 
 @sman2.route('/angkatan/<cari_angkatan>/', methods=["POST", "GET"])
 def angkatan(cari_angkatan):
@@ -277,7 +277,7 @@ def forgot():
 
 @sman2.errorhandler(404)
 def not_found(error):
-	log = Log(request=request.url, ip=request.remote_addr, time=datetime.now())
+	log = Log(request=request.url, ip=request.remote_addr, time=datetime.now(), referer=request.referrer)
 	session_db.add(log)
 	session_db.commit()
 	session_db.close()
