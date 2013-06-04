@@ -10,10 +10,12 @@
   			<input type="text" name="edit-fullname" class="span5" placeholder="Fullname" value="{{ profile.fullname }}" required><br><br>
   			<label><b>Angkatan : </b></label> 
   			<select name="edit-angkatan" class="span5" >
+				<option  value='{{ profile.angkatan }}'>{{ profile.angkatan }}</option>	
 				<script>
 					var now = new Date(); /*Important Line, that you all missing... */
+											
 					var checkyear = now.getUTCFullYear() + 1;
-						document.write("<option disabled='disabled' value='{{ profile.handphone }}'>{{ profile.angkatan }}</option>")
+						
 						for (x=1945; x<checkyear; x++)
 							{	
 								document.write("<option value="+x+">"+x+"</option>");

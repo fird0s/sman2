@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block content %}
+<div id="profile">
+			<form class="form-inline" action="{{ url_for('changepassword') }}" method="POST">
+				{% if lala %}
+					<script type="text/javascript">
+					(".alert").alert()
+					</script>
+					<p class="alert"><b>Thanks </b> | Your password has been changed </p>
+				
+				{% endif %}
+				<p><b>Username :</b></p>
+					<div class="input-prepend">
+  						<span class="add-on">@</span>
+  						<input class="span4" name="username" disabled="disable" id="prependedInput" type="text" value="{{datauser.username}}">
+					</div><hr>
+				
+				<p><b>Current Password:</b></p>
+				<input type="text" name="current" class="span5" requeired><hr>
+				
+				<p><b>New Password:</b></p>
+				<input type="text" name="newpass" class="span5" required><hr>
+				
+				<p><b>Re-New Password:</b></p>
+				<input type="text" name="re-pass" class="span5" required><br><br>
+  				<button type="submit" class="btn btn-large btn-success">change password </button>
+			</form>		
+</div>			
+{% endblock %}

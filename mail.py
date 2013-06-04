@@ -20,3 +20,12 @@ def send_forgot(receiver):
 		session.quit()
 	finally:
 		print "ok"
+		
+		
+		
+		
+		datauser.email = request.form["email"]	
+			datauser.angkatan = request.form["angkatan"]	
+			datauser.handphone = request.form["hp"]	
+			datauser.work = request.form["pekerjaan"]	
+			datauser.status = request.form["status"]	

@@ -18,6 +18,9 @@ def index():
 	session_db.close()
 	return render_template("index.html", all_user=all_user, auth=auth, get_user=get_user, abc=abc)
 
+@sman2.route("/favicon.ico")
+def favico():
+	pass
 
 @sman2.route('/contact/',  methods=['GET', 'POST'])
 def contact():
@@ -44,9 +47,9 @@ def register():
 		return redirect(url_for('index'))
 
 	if request.method == "POST":
-		token = session.pop('_csrf_token', None)
-		if not token or token != request.form.get('_csrf_token'):
-		    	abort(403)
+		#token = session.pop('_csrf_token', None)
+		#if not token or token != request.form.get('_csrf_token'):
+		 #   	abort(403)
 		if request.form["rg-name"] and request.form["rg-fullname"] and request.form["rg-mail"] and \
 		   request.form["rg-password"]:
 			try:
@@ -75,13 +78,28 @@ def generate_csrf_token():
     
 sman2.jinja_env.globals['csrf_token'] = generate_csrf_token  	
 	
+@sman2.route('/user/', methods=["POST", "GET"])	
+def login():
+	if request.method == "POST":
+		try:
+			login = session_db.query(Users).filter_by(username = request.form["user-login"]).one()
+			if request.form["user-password"] == login.password:
+				session["user"] = request.form["user-login"]
+				return redirect("/user/"+login.username)
+				
+			else:
+				pass
+		except sqlalchemy.orm.exc.NoResultFound:			
+			pass
+	return render_template("index.html")
+	
 @sman2.route('/user/<show_profil>')
 def profile(show_profil):
 	get_user = session.get("user", None)
 	if "user" in session:
 		auth=True
 	else:
-		auth=None
+		auth=False
 	try:
 		profil_data = session_db.query(Users).filter_by(username = show_profil).one()
 	except sqlalchemy.orm.exc.NoResultFound:
@@ -93,25 +111,6 @@ def profile(show_profil):
 	return render_template("details.html", profil_data=profil_data, auth=auth, get_user=get_user)
 
 
-@sman2.route('/user/',  methods=['GET', 'POST'])
-def user():
-	if request.method == "POST":
-		if request.form["user-login"] and request.form["user-password"]:
-			try:
-				check = session_db.query(Users).filter_by(username = request.form["user-login"]).one()
-				if check.password == request.form["user-password"]:
-					session['user'] = request.form['user-login']
-					
-					return redirect(url_for('profile', show_profil=check.username))
-					session_db.close()	
-				else: 
-					return "your password is wrong"	
-			except sqlalchemy.orm.exc.NoResultFound:	
-				return "Your Username is wrong"
-	if "user" in session:
-		return "you logged as %s" % session['user']			
-	return render_template("user.html", check=check)
-
 @sman2.route('/admin/', methods=["GET", "POST"])
 def admin():
 	if "admin" in session:
@@ -119,8 +118,12 @@ def admin():
 	else:
 		auth_admin=False
 	if request.method == "POST":
-		if request.form["admin-user"] == "masuk" and request.form["admin-pass"] == "masuk":
-			session['admin'] = "admin"
+		if request.form["admin-user"] and request.form["admin-pass"]:
+			username = session_db.query(Admin).filter_by(nama = request.form["admin-user"]).one()
+			if username.password == request.form["admin-pass"]:	
+				session['admin'] = request.form["admin-user"]
+			else:
+				return redirect(url_for("admin"))	
 	all_log = all_log = session_db.query(Log).all()[0:20]
 	all_log.reverse()		
 	all_contact = session_db.query(Contact).all()[0:20]
@@ -172,24 +175,35 @@ def admin_user_delete(hapus):
 def admin_user_edit(edit):
 	if "admin" not in session:
 		return redirect(url_for("admin"))
-	action = session_db.query(Users).filter_by(id = edit).one()
-	if request.method == "POST":	
+	datauser = session_db.query(Users).filter_by(id = edit).one()		
+	if request.method == "POST":
 		try:
-			action.username = request.form["edit-username"]
-			action.fullname = request.form["edit-fullname"]
-			action.email = request.form["edit-email"]
-			action.handphone = request.form["edit-handphone"]
-			action.angkatan = request.form["edit-angkatan"]
-			action.work = request.form["edit-pekerjaan"]
-			session_db.add(action)
+			datauser.username = request.form["username"]	
+			datauser.fullname = request.form["fullname"]	
+			datauser.email = request.form["email"]	
+			datauser.angkatan = request.form["angkatan"]	
+			datauser.handphone = request.form["hp"]	
+			datauser.work = request.form["pekerjaan"]	
+			#datauser.status = request.form["status"]
+			session_db.add(datauser)
 			session_db.commit()
-			session_db.close() 
 			session.pop("user", None)
-			session['user'] = request.form['edit-username']
-			return redirect(url_for("admin_user"))
-		except sqlalchemy.exc.IntegrityError:
-			return "Your Email or Username alredy use"	
-	return render_template("admin_user_edit.html", action=action)				
+			session["user"] = request.form["username"]
+			return redirect(url_for("admin_user_edit", edit=datauser.id))
+		except ValueError:
+			return "papma"
+					
+	datauser = session_db.query(Users).filter_by(id = edit).one()		
+	return render_template("admin_user_edit.html", datauser=datauser)				
+
+@sman2.route("/admin/logout/")
+def admin_logout():
+	if "admin" in session:
+		session.pop("admin", None)
+	else:
+		return redirect(url_for("admin"))	
+	return redirect(url_for("admin"))
+	
 	
 @sman2.route("/search/")
 def search():
@@ -203,7 +217,7 @@ def search():
 			nama = request.args.get("search-name", "")
 			get_fullname = session_db.query(Users).filter(Users.fullname.like("%"+request.args.get("search-name", "")+"%"))
 		else:
-			return "Anda Belom Mengiisikan Nama."	
+			return redirect(url_for("index"))
 	return render_template("search.html", get_fullname=get_fullname, nama=nama, auth=auth, get_user=get_user)
 
 @sman2.route("/edit/", methods=['GET', 'POST'])
@@ -229,15 +243,6 @@ def edit_user():
 			return "please <b>%s</b> alredy used by other people !"  % (request.form["edit-email"])
 	return render_template("edit_user.html", auth=auth, get_user=get_user, profile=profile)
 
-#@sman2.route("/admin/log-error/")
-#def log_error():
-#	if "admin" not in session:
-#		return redirect(url_for("admin"))
-#	all_log = session_db.query(Log).all()[0:1000]
-#	all_log.reverse()
-#	session_db.close()
-#	return render_template("log.html", all_log=all_log)
-
 @sman2.route('/angkatan/<cari_angkatan>/', methods=["POST", "GET"])
 def angkatan(cari_angkatan):
 	if "user" in session:
@@ -248,6 +253,31 @@ def angkatan(cari_angkatan):
 	get_fullname = session_db.query(Users).filter_by(angkatan = cari_angkatan).all()
 	angkatan = cari_angkatan
 	return render_template("angkatan.html", auth=auth, get_user=get_user, get_fullname=get_fullname, angkatan=angkatan)
+
+@sman2.route("/user/changepassword/", methods=["POST", "GET"])
+def changepassword():
+	lala = None
+	if "user" in session:
+		auth=True
+	else:
+		auth=None
+	get_user = session.get("user", None)
+	if "user" not in session:
+		return redirect("/")
+	datauser = session_db.query(Users).filter_by(username = get_user).one()
+	if request.method == "POST":
+		if datauser.password == request.form["current"]:
+			if request.form["newpass"] == request.form["re-pass"]:
+				datauser.password = request.form["newpass"]
+				session_db.add(datauser)
+				session_db.commit()
+				lala = True
+			else:
+				return "Your New Password is not same with re-type password | <b>Please Back !</b>"
+		else:
+			return "Sorry your current password is not match"			
+		
+	return render_template ("changepass.html", datauser=datauser, auth=auth, get_user=get_user, lala=lala)
 
 @sman2.route('/logout/', methods=["POST", "GET"])
 def logout():

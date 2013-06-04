@@ -1,37 +1,47 @@
 {% extends "admin.html" %}
 {% block content %}
-<div id="content">
-	<h2><u>Edit User</u></h2>
-			<center>
-			<div class="input-prepend">
-			  <form action="/admin/user/edit/{{ action.id }}/" method="POST">
-				<label><b>Username :</b></label>
-		 		<span class="add-on">@</span>
-  				<input class="span4" name="edit-username" id="prependedInput" type="text" value={{ action.username}}><br><br>
-  				<label><b>Fullname :</b></label>
-  				<input type="text" name="edit-fullname" class="span5" placeholder="Fullname" value={{ action.fullname}}><br><br>
-  				<label><b>Email :</b></label>
-  				<input type="text" name="edit-email" class="span5" placeholder="Email" value={{ action.email }} ><br><br>
-  				<label><b>Handphone :</b></label>
-  				<input type="text" name="edit-handphone" class="span5" placeholder="Handphone" value={{ action.handphone }} ><br><br>
-  				<label><b>Angkatan :</b></label>
-  				<select name="edit-angkatan" class="span5" >
-					<script>
-						var now = new Date(); /*Important Line, that you all missing... */
-						var checkyear = now.getUTCFullYear() + 1;
-							document.write("<option  value='{{ action.handphone }}'>{{ action.angkatan }}</option>")
-							for (x=1945; x<checkyear; x++)
-								{	
-									document.write("<option value="+x+">"+x+"</option>");
-								}	
-					</script>
-				</select><br><br>
-				<label><b>Pekerjaan :</b></label>
-  				<input type="text" name="edit-pekerjaan" class="span5" placeholder="Pekerjaan" value={{ action.work }}><br><br>	
-  				<button class="btn btn-large btn-primary" type="submit">Save Settings</button>
-  			  </form>	
-			</div>
-			</center>
-  				
+<div id="content"><br>
+	<form action="/admin/user/edit/{{ datauser.id }}/" method="POST">
+		<label> <b>Username :</b> </label>	
+		<div class="input-prepend">
+  			<span class="add-on">@</span>
+  			<input class="span4" name="username" id="prependedInput" type="text" value="{{datauser.username}}">
+		</div>	
+		<label> <b>Fullname :</b> </label>	
+		<input type="text" name="fullname" class="span5" value="{{datauser.fullname}}">
+		
+		<label> <b>Email :</b> </label>	
+		<input type="email" name="email" class="span5" value="{{datauser.email}}">
+		
+		<label> <b>Angkatan :</b> </label>	
+		<select name="angkatan" class="span5" >
+				<option  value='{{ datauser.angkatan }}'>{{ datauser.angkatan }}</option>	
+				<script>
+					var now = new Date(); /*Important Line, that you all missing... */
+											
+					var checkyear = now.getUTCFullYear() + 1;
+					
+						for (x=1945; x<checkyear; x++)
+							{	
+								document.write("<option value="+x+">"+x+"</option>");
+							}	
+				</script>
+			</select><br>
+		
+		<label> <b>Handphone :</b> </label>	
+		<input type="text" name="hp" class="span5" value="{{datauser.handphone}}">
+	
+		<label> <b>Pekerjaan :</b> </label>	
+		<input type="text" name="pekerjaan" class="span5" value="{{datauser.work}}">
+		
+		<!--<label> <b>Status :</b> </label>	
+		<select name="status" class="span5" >	
+			<option value="{{datauser.status}}" selected="selected"  disabled="disabled" >{{datauser.status}}</option>
+			<option value="User">User</option>	
+			<option value="Admin">Admin</option>	
+		</select> -->
+		<br>
+		 <button class="btn btn-large" type="submit">Change Profile</button>
+	</form>	
 </div>
 {% endblock %}

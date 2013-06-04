@@ -19,7 +19,7 @@
                   <td><a href="/user/{{ alluser.username }}">{{ alluser.fullname }}</a></td>
                   <td>{{ alluser.angkatan }}</td>
                   <td>{{ alluser.email }}</td>
-                  <td><a href="/admin/user/delete/{{ alluser.id }}">hapus</a> / <a href="/admin/user/edit/{{ alluser.id }}">edit</a></td>                 
+                  <td><a href="/admin/user/delete/{{ alluser.id }}/">delete</a> / <a href="/admin/user/edit/{{ alluser.id }}/">edit</a></td>                 
                 </tr>
                 {% endfor %}
               </tbody>

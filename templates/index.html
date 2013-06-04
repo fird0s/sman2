@@ -8,6 +8,8 @@
 		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">	
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.4.4.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/ckeditor.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-alert.js') }}"></script>
+		
 		<script type="text/javascript">
 			var now = new Date(); /*Important Line, that you all missing... */
 			var checkyear = now.getUTCFullYear() + 1;
@@ -94,6 +96,7 @@
 					<li><a href="/user/{{ get_user }}" class="setting"><b><u>{{ get_user }}</u></b> &raquo</a>
 						<ul>
 							<li><a href="{{ url_for('edit_user') }}">SETTINGS</a></li>
+							<li><a href="/user/changepassword/">PASSWORD</a></li>
 							<li><a href="{{ url_for('logout') }}">LOG OUT</a></li>
 						</ul>	
 					</li> 
@@ -190,7 +193,7 @@
 	<h4 class="singup-keluar" style="margin-left: 650px; color: #FF5919; font-size: 40px; ">&times;</h4>
 		<h3>REGISTER ...</h3>
 		<form class="form-inline" method="POST" action="{{ url_for('register') }}">
-			<input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+			<!-- <input name=_csrf_token type=hidden value="{{ csrf_token() }}"> -->
 			<input type="text" name="rg-name" class="span3" placeholder="Username" required>
   			<input type="text" name="rg-fullname" class="span4" placeholder="Fullname" required><br><br>
   			<input type="email" name="rg-mail" class="span4" placeholder="Email" required>
@@ -234,9 +237,8 @@
 	
 	<!-- FOOTER -->
 	<div id="footer">
-		<li><a href="https://firdaus.jones.dk" target="blank">DEVELOPED-BY</a></li>
+		<li><a href="http://firdaus.jones.dk" target="blank">DEVELOPED-BY</a></li>
 		<li><a class="overlay-contact">CONTACT/FEEDBACK</a></li>
-<!--		<li><a href="#">DONATE</a></li>-->
 	</div>
 	<!--END FOOTER -->
 </body>

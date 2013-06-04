@@ -7,7 +7,7 @@ engine = create_engine('mysql://sman2:sman2@localhost/sman2_alumni.db', convert_
 Base = declarative_base()
 
 class Users(Base):
-	__tablename__ = "user"
+	__tablename__ = "sman2_user"
 	
 	id = Column(Integer, primary_key=True)
 	username = Column(String(30), primary_key=True, unique=True)
@@ -39,7 +39,7 @@ class Users(Base):
 					angkatan = self.angkatan, handphone = self.handphone, work = self.work)  
 		
 class Contact(Base):
-	__tablename__ = "contact"
+	__tablename__ = "sman2_contact"
 
 	id = Column(Integer, primary_key=True)
 	name = Column(String(30))
@@ -55,7 +55,7 @@ class Contact(Base):
 		
 		
 class Berita(Base):
-	__tablename__ = "berita"
+	__tablename__ = "sman2_berita"
 	
 	id = Column(Integer, primary_key=True)
 	judul = Column(String(100))
@@ -65,7 +65,7 @@ class Berita(Base):
 	
 		
 class Log(Base):
-	__tablename__ = "log"
+	__tablename__ = "sman2_log"
 	
 	id = Column(Integer, primary_key=True)
 	request = Column(String(400))		
@@ -74,12 +74,13 @@ class Log(Base):
 	referer = Column(TEXT)
 		
 class Admin(Base):
-	__tablename__ = "admin"
+	__tablename__ = "sman2_admin"
 		
 	id = Column(Integer, primary_key=True)
 	nama = Column(String(100))			
 	password = Column(String(100))
 	ip = Column(String(100))
+
 			
 Session = sessionmaker(bind=engine)
 session_db = Session()	
