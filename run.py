@@ -184,6 +184,7 @@ def admin_user_edit(edit):
 			datauser.angkatan = request.form["angkatan"]	
 			datauser.handphone = request.form["hp"]	
 			datauser.work = request.form["pekerjaan"]	
+			datauser.alamat = request.form["alamat"]
 			#datauser.status = request.form["status"]
 			session_db.add(datauser)
 			session_db.commit()
@@ -235,6 +236,7 @@ def edit_user():
 			profile.handphone = request.form["edit-handphone"]
 			profile.angkatan = request.form["edit-angkatan"]
 			profile.work = request.form["edit-pekerjaan"]
+			profile.alamat = request.form["edit-alamat"]
 			session_db.add(profile)
 			session_db.commit()
 			session_db.close()
@@ -256,7 +258,7 @@ def angkatan(cari_angkatan):
 
 @sman2.route("/user/changepassword/", methods=["POST", "GET"])
 def changepassword():
-	lala = None
+	success = None
 	if "user" in session:
 		auth=True
 	else:
@@ -271,13 +273,13 @@ def changepassword():
 				datauser.password = request.form["newpass"]
 				session_db.add(datauser)
 				session_db.commit()
-				lala = True
+				success = True
 			else:
 				return "Your New Password is not same with re-type password | <b>Please Back !</b>"
 		else:
 			return "Sorry your current password is not match"			
 		
-	return render_template ("changepass.html", datauser=datauser, auth=auth, get_user=get_user, lala=lala)
+	return render_template ("changepass.html", datauser=datauser, auth=auth, get_user=get_user, lala=success)
 
 @sman2.route('/logout/', methods=["POST", "GET"])
 def logout():
@@ -295,15 +297,16 @@ def logout():
 
 @sman2.route('/forgot/', methods=["POST", "GET"])
 def forgot():
+	success = None
 	if request.method == "POST":
 		if request.form["forgot-password"]:
 			try:
 				reset = session_db.query(Users).filter_by(email = request.form["forgot-password"]).one()
-				return "<p class='alert alert-success'><b>Well done</b> | Password has been sent to your mail.</p>"
+				success = True
 			except sqlalchemy.orm.exc.NoResultFound:	
 				return "<p class='alert alert-error'><b>ERROR</b> | Your email does not exist.</p>"
 				  
-	return render_template("forgot.html")
+	return render_template("forgot.html", success=success)
 
 @sman2.errorhandler(404)
 def not_found(error):

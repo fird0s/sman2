@@ -1,6 +1,9 @@
 {% extends "index.html" %}
 {% block content %}
 <div id="profile">
+			{% if success %}	
+			<p class="alert"><b>Thanks </b> | Your password has been changed </p>
+			{% endif %}
 			<form class="form-inline" action="{{ url_for('forgot') }}" method="POST">
 				<label><b>Your Mail :</b></label>
   				<input type="text" name="forgot-password" class="span4" placeholder="Your Email" required>
