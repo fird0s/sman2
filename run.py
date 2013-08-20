@@ -9,14 +9,13 @@ import time
 @sman2.route('/',  methods=['GET', 'POST'])
 def index():
 	get_user = session.get("user", None)
-	abc = "fird0s"
 	if "user" in session:
 		auth=True
 	else:
 		auth=False		
 	all_user = session_db.query(Users).all()[0:50]
 	session_db.close()
-	return render_template("index.html", all_user=all_user, auth=auth, get_user=get_user, abc=abc)
+	return render_template("index.html", all_user=all_user, auth=auth, get_user=get_user)
 
 @sman2.route("/favicon.ico")
 def favico():
@@ -118,12 +117,15 @@ def admin():
 	else:
 		auth_admin=False
 	if request.method == "POST":
-		if request.form["admin-user"] and request.form["admin-pass"]:
-			username = session_db.query(Admin).filter_by(nama = request.form["admin-user"]).one()
-			if username.password == request.form["admin-pass"]:	
-				session['admin'] = request.form["admin-user"]
-			else:
-				return redirect(url_for("admin"))	
+		try:
+			if request.form["admin-user"] and request.form["admin-pass"]:
+				username = session_db.query(Admin).filter_by(nama = request.form["admin-user"]).one()
+				if username.password == request.form["admin-pass"]:	
+					session['admin'] = request.form["admin-user"]
+				else:
+					return redirect(url_for("admin"))	
+		except NoResultFound:
+			return "No admin found here"		
 	all_log = all_log = session_db.query(Log).all()[0:20]
 	all_log.reverse()		
 	all_contact = session_db.query(Contact).all()[0:20]

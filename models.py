@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import sqlalchemy
 from sqlalchemy.exc import *
-engine = create_engine('mysql://sman2:sman2@localhost/sman2_alumni.db', convert_unicode=True)
+engine = create_engine('mysql://fird0s:a@localhost/sman2_alumni', convert_unicode=True)
 Base = declarative_base()
 
 class Users(Base):
@@ -86,5 +86,5 @@ Session = sessionmaker(bind=engine)
 session_db = Session()	
 		
 #Base.metadata.create_all(engine) this for create your database and 
-#please setting databasename 'sman2_alumni.db' and user = 'sman2' and pass = 'sman2'
+#please setting databasename 'sman2_alumni' and user = 'fird0s' and pass = 'a'
 
