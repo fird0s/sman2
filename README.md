@@ -1,4 +1,4 @@
 sman2
 =====
 
-Website Alumni of my Senior High School, collect database every one alumni at my school
+Small project that created with Python Flask and SQLAlchemy. The project recorded alumni database. This project is not professional-based but just for hobby <3
